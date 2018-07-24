@@ -69,14 +69,9 @@ function picked3() {
 }
 
 function start() {
-  while (random1 === random2) {
+  while (random1 === random2 || random1 === random3 || random2 === random3) {
     random2 = imgRandom();
-    while (random2 === random3) {
-      random3 = imgRandom();
-      while (random1 === random3) {
-        random3 = imgRandom();
-      }
-    }
+    random3 = imgRandom();
   }
   Img1.src = random1.src;
   document.getElementById('1').appendChild(Img1);
@@ -93,14 +88,9 @@ function renderImgs() {
   random1 = imgRandom();
   random2 = imgRandom();
   random3 = imgRandom();
-  while (random1 === random2) {
+  while (random1 === random2 || random1 === random3 || random2 === random3) {
     random2 = imgRandom();
-    while (random2 === random3) {
-      random3 = imgRandom();
-      while (random1 === random3) {
-        random3 = imgRandom();
-      }
-    }
+    random3 = imgRandom();
   }
   Img1.src = random1.src;
   document.getElementById('1').appendChild(Img1);
