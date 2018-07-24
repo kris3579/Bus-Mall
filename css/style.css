@@ -21,10 +21,15 @@ img {
   display: block;
   width: 200px;
   margin: auto;
+  margin-bottom: 10px;
 }
 
 section {
   font-size: 0;
+}
+
+h1 {
+  font-size: 2em;
 }
 
 .inputDiv {
