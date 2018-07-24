@@ -21,7 +21,8 @@ var random1;
 var random2;
 var random3;
 
-function Img(src) {
+function Img(name, src) {
+  this.name = name;
   this.src = src;
   this.clicks = 0;
   this.rendered = 0;
@@ -30,26 +31,26 @@ function Img(src) {
 }
 
 // vote.addEventListener('click', renderImg);
-new Img('assets/bag.jpg');
-new Img('assets/banana.jpg');
-new Img('assets/bathroom.jpg');
-new Img('assets/boots.jpg');
-new Img('assets/breakfast.jpg');
-new Img('assets/bubblegum.jpg');
-new Img('assets/chair.jpg');
-new Img('assets/cthulhu.jpg');
-new Img('assets/dog-duck.jpg');
-new Img('assets/dragon.jpg');
-new Img('assets/pen.jpg');
-new Img('assets/pet-sweep.jpg');
-new Img('assets/scissors.jpg');
-new Img('assets/shark.jpg');
-new Img('assets/sweep.png');
-new Img('assets/tauntaun.jpg');
-new Img('assets/unicorn.jpg');
-new Img('assets/usb.gif');
-new Img('assets/water-can.jpg');
-new Img('assets/wine-glass.jpg');
+new Img('Bag', 'assets/bag.jpg');
+new Img('Banana', 'assets/banana.jpg');
+new Img('Bathroom', 'assets/bathroom.jpg');
+new Img('Boots', 'assets/boots.jpg');
+new Img('Breakfast', 'assets/breakfast.jpg');
+new Img('Bubblegum', 'assets/bubblegum.jpg');
+new Img('Chair', 'assets/chair.jpg');
+new Img('Cthulhu', 'assets/cthulhu.jpg');
+new Img('Dog-Duck', 'assets/dog-duck.jpg');
+new Img('Dragon', 'assets/dragon.jpg');
+new Img('Pen', 'assets/pen.jpg');
+new Img('Pet-Sweep', 'assets/pet-sweep.jpg');
+new Img('Scissors', 'assets/scissors.jpg');
+new Img('Shark', 'assets/shark.jpg');
+new Img('Sweep', 'assets/sweep.png');
+new Img('Tauntaun', 'assets/tauntaun.jpg');
+new Img('Unicorn', 'assets/unicorn.jpg');
+new Img('USB', 'assets/usb.gif');
+new Img('Water-Can', 'assets/water-can.jpg');
+new Img('Wine-Glass', 'assets/wine-glass.jpg');
 
 function imgRandom() {
   return imgArray[Math.floor(Math.random() * imgArray.length)];
@@ -105,6 +106,11 @@ function pushRandoms() {
 }
 
 
+function roundPercents(percent) {
+  return Math.round(percent);
+}
+
+
 function onLoad() {
   reRollImgs();
 
@@ -141,6 +147,22 @@ function renderImgs() {
   renderTotals();
   noRepeat = [];
   pushRandoms();
+
+  if (totalVotes >= 25) {
+    alert('Voting over!');
+    clicked1.removeEventListener('click', picked1);
+    clicked2.removeEventListener('click', picked2);
+    clicked3.removeEventListener('click', picked3);
+
+    for (var i = 0; i < imgArray.length; i++) {
+      var liElement = document.createElement('li');
+      liElement.textContent = imgArray[i].name + ': Times clicked: ' + imgArray[i].clicks + ', % voted for by appearance: ' + roundPercents(25 / imgArray[i].rendered) + '%';
+      document.getElementById('list').appendChild(liElement);
+      document.getElementById('list').style.visibility = 'visible';
+    }
+  }
 }
+
+
 
 onLoad();
