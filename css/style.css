@@ -1,0 +1,57 @@
+body {
+  padding: 2%;
+}
+
+aside {
+  float: left;
+  padding: 1%;
+  width: 15%;
+  height: 50%;
+  border: solid black;
+  border-width: 0.5%;
+}
+
+ul {
+  border: solid black;
+  border-width: 0.5%;
+  height: 50%;
+}
+
+img {
+  display: block;
+  width: 200px;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+section {
+  font-size: 0;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+.inputDiv {
+  display: block;
+  margin : auto;
+  width: 20%;
+  font-size: 1em;
+}
+
+.voteDiv {
+  border: solid black;
+  border-width: 0.5%;
+  padding: 1%;
+  display: inline-block;
+  width: 24%;
+  height: 25%;
+}
+
+#buttonDiv {
+  border: solid black;
+  border-width: 0.5%;
+  padding: 1%;
+  width: 80%;
+  display: inline-block;
+}
