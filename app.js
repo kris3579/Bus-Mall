@@ -2,6 +2,8 @@
 
 var imgArray = [];
 var noRepeat = [];
+var namesByImage = []
+var clicksByImage = [];
 
 var totalVotes = 0;
 
@@ -164,44 +166,92 @@ function renderImgs() {
       document.getElementById('list').appendChild(document.createElement('br'));
       document.getElementById('list').style.visibility = 'visible';
     }
+
+    setDataArrays();
+    makeChart();
   }
 }
 
-var chart = document.getElementById('chart').getContext('2d');
 
-new Chart(chart).Bar(barData);
+function setDataArrays {
+  for (var j = 0; j < imgArray.length; j++) {
+    namesByImage.push(imgArray[j].name);
+    clicksByImage.push(imgArray[j].clicks)
+  }
+}
 
 
+function makeChart() {
+  var chart = document.getElementById('chart').getContext('2d');
 
-var barData = {
-
-  labels: [ imgArray[0].name, imgArray[1].name, imgArray[2].name, imgArray[3].name, imgArray[4].name, imgArray[5].name, imgArray[6].name, imgArray[7].name, imgArray[8].name, imgArray[9].name, imgArray[10].name, imgArray[11].name, imgArray[12.name], imgArray[13].name, imgArray[14].name, imgArray[15].name, imgArray[16].name, imgArray[17].name, imgArray[18].name, imgArray[19].name]
-
-  datasets: [
-
-    {
-
-      fillColor: '#48A497',
-
-      strokeColor: '#48A4D1',
-
-      data: [456, 479, 324, 569, 702, 600]
-
+  var barChart = new Chart(chart, {
+    type: 'bar',
+    data: {
+      labels: namesByImage,
+      datasets: [{
+        label: 'clicks',
+        data: clicksByImage,
+        backgroundColor: 'rgba(0, 255, 0, 0.7)',
+      }
+        // {
+        //   label: 'renders',
+        //   data: imgArray.rendered,
+        //   backgroundColor: 'rgba(255, 0, 0, 0.7)',
+        // }
+      ]
     },
-
-    {
-
-      fillColor: 'rgba(73,188,170,0.4)',
-
-      strokeColor: 'rgba(72,174,209,0.4)',
-
-      data: [364, 504, 605, 400, 345, 320]
-
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            autoSkip: false
+          }
+        }]
+      }
     }
+  });
 
 
+  // var barChart = new Chart(chart).Bar(barData);
+  // var myBarChart = new Chart(chart, {
+  //   type: 'bar',
+  //   data: barData,
+  // });
 
-  ]
+  // var barData = {
+
+  //   labels: imgArray.name,
+
+  //   datasets: [
+
+  //     {
+
+  //       fillColor: '#48A497',
+
+  //       strokeColor: '#48A4D1',
+
+  //       data: imgArray.clicks,
+
+  //     },
+
+  //     {
+
+  //       fillColor: 'rgba(73,188,170,0.4)',
+
+  //       strokeColor: 'rgba(72,174,209,0.4)',
+
+  //       data: imgArray.rendered,
+
+  //     }
+
+  //   ]
+
+  // };
 
 }
 
