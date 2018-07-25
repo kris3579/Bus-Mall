@@ -149,7 +149,6 @@ function renderImgs() {
   pushRandoms();
 
   if (totalVotes >= 25) {
-    alert('Voting over!');
     clicked1.removeEventListener('click', picked1);
     clicked2.removeEventListener('click', picked2);
     clicked3.removeEventListener('click', picked3);
