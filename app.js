@@ -2,8 +2,9 @@
 
 var imgArray = [];
 var noRepeat = [];
-var namesByImage = []
+var namesByImage = [];
 var clicksByImage = [];
+var percentClickedByImage = [];
 
 var totalVotes = 0;
 
@@ -108,11 +109,6 @@ function pushRandoms() {
 }
 
 
-function roundPercents(percent) {
-  return Math.round(percent);
-}
-
-
 function onLoad() {
   reRollImgs();
 
@@ -161,7 +157,7 @@ function renderImgs() {
       document.getElementById('list').appendChild(liElement);
       var liElement2 = document.createElement('li');
       document.getElementById('list').appendChild(document.createElement('br'));
-      liElement2.textContent = '% voted for by appearance: ' + roundPercents(25 / imgArray[i].rendered) + '%';
+      liElement2.textContent = '% voted for by appearance: ' + Math.round(((imgArray[i].clicks / imgArray[i].rendered) * 100)) + '%';
       document.getElementById('list').appendChild(liElement2);
       document.getElementById('list').appendChild(document.createElement('br'));
       document.getElementById('list').style.visibility = 'visible';
@@ -173,32 +169,28 @@ function renderImgs() {
 }
 
 
-function setDataArrays {
+function setDataArrays() {
   for (var j = 0; j < imgArray.length; j++) {
     namesByImage.push(imgArray[j].name);
-    clicksByImage.push(imgArray[j].clicks)
+    clicksByImage.push(imgArray[j].clicks);
+    percentClickedByImage.push(Math.round((imgArray[j].clicks / imgArray[j].rendered) * 100));
   }
 }
 
 
 function makeChart() {
-  var chart = document.getElementById('chart').getContext('2d');
+  var chart1 = document.getElementById('chart').getContext('2d');
+  var chart2 = document.getElementById('chart2').getContext('2d');
 
-  var barChart = new Chart(chart, {
+  var barChart1 = new Chart(chart1, {
     type: 'bar',
     data: {
       labels: namesByImage,
       datasets: [{
-        label: 'clicks',
+        label: 'Times Clicked',
         data: clicksByImage,
-        backgroundColor: 'rgba(0, 255, 0, 0.7)',
-      }
-        // {
-        //   label: 'renders',
-        //   data: imgArray.rendered,
-        //   backgroundColor: 'rgba(255, 0, 0, 0.7)',
-        // }
-      ]
+        backgroundColor: 'rgba(0, 255, 0, 0.5)',
+      }]
     },
     options: {
       scales: {
@@ -216,42 +208,31 @@ function makeChart() {
     }
   });
 
-
-  // var barChart = new Chart(chart).Bar(barData);
-  // var myBarChart = new Chart(chart, {
-  //   type: 'bar',
-  //   data: barData,
-  // });
-
-  // var barData = {
-
-  //   labels: imgArray.name,
-
-  //   datasets: [
-
-  //     {
-
-  //       fillColor: '#48A497',
-
-  //       strokeColor: '#48A4D1',
-
-  //       data: imgArray.clicks,
-
-  //     },
-
-  //     {
-
-  //       fillColor: 'rgba(73,188,170,0.4)',
-
-  //       strokeColor: 'rgba(72,174,209,0.4)',
-
-  //       data: imgArray.rendered,
-
-  //     }
-
-  //   ]
-
-  // };
+  var barChart2 = new Chart(chart2, {
+    type: 'bar',
+    data: {
+      labels: namesByImage,
+      datasets: [{
+        label: '% Clicked Per Renders',
+        data: percentClickedByImage,
+        backgroundColor: 'rgba(255, 0, 0, 0.5)',
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            autoSkip: false
+          }
+        }]
+      }
+    }
+  });
 
 }
 

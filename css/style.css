@@ -62,3 +62,9 @@ p {
   width: 80%;
   display: inline-block;
 }
+
+#chartDiv1, #chartDiv2 {
+  display: inline-block;
+  width: 500px;
+  height: 400px;
+}
