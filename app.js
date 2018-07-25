@@ -156,13 +156,16 @@ function renderImgs() {
 
     for (var i = 0; i < imgArray.length; i++) {
       var liElement = document.createElement('li');
-      liElement.textContent = imgArray[i].name + ': Times clicked: ' + imgArray[i].clicks + ', % voted for by appearance: ' + roundPercents(25 / imgArray[i].rendered) + '%';
+      liElement.textContent = imgArray[i].name + ': Times clicked: ' + imgArray[i].clicks;
       document.getElementById('list').appendChild(liElement);
+      var liElement2 = document.createElement('li');
+      document.getElementById('list').appendChild(document.createElement('br'));
+      liElement2.textContent = '% voted for by appearance: ' + roundPercents(25 / imgArray[i].rendered) + '%';
+      document.getElementById('list').appendChild(liElement2);
+      document.getElementById('list').appendChild(document.createElement('br'));
       document.getElementById('list').style.visibility = 'visible';
     }
   }
 }
-
-
 
 onLoad();
