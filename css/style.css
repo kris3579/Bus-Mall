@@ -35,9 +35,8 @@ h1 {
 
 p {
   text-indent: 30px;
-  margin-top: 15px;
-  margin-left: 15px;
-  margin-right: 30px;
+  margin: 15px;
+  margin-right: 20px;
 }
 
 .inputDiv {
@@ -62,4 +61,11 @@ p {
   padding: 1%;
   width: 80%;
   display: inline-block;
+}
+
+#chartDiv1, #chartDiv2 {
+  display: inline-block;
+  width: 500px;
+  height: 400px;
+  margin-left: 2.5%;
 }
