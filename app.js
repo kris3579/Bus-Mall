@@ -2,6 +2,9 @@
 
 var imgArray = [];
 var noRepeat = [];
+var namesByImage = [];
+var clicksByImage = [];
+var percentClickedByImage = [];
 
 var totalVotes = 0;
 
@@ -106,11 +109,6 @@ function pushRandoms() {
 }
 
 
-function roundPercents(percent) {
-  return Math.round(percent);
-}
-
-
 function onLoad() {
   reRollImgs();
 
@@ -159,12 +157,83 @@ function renderImgs() {
       document.getElementById('list').appendChild(liElement);
       var liElement2 = document.createElement('li');
       document.getElementById('list').appendChild(document.createElement('br'));
-      liElement2.textContent = '% voted for by appearance: ' + roundPercents(25 / imgArray[i].rendered) + '%';
+      liElement2.textContent = '% voted for by appearance: ' + Math.round(((imgArray[i].clicks / imgArray[i].rendered) * 100)) + '%';
       document.getElementById('list').appendChild(liElement2);
       document.getElementById('list').appendChild(document.createElement('br'));
       document.getElementById('list').style.visibility = 'visible';
     }
+
+    setDataArrays();
+    makeChart();
   }
+}
+
+
+function setDataArrays() {
+  for (var j = 0; j < imgArray.length; j++) {
+    namesByImage.push(imgArray[j].name);
+    clicksByImage.push(imgArray[j].clicks);
+    percentClickedByImage.push(Math.round((imgArray[j].clicks / imgArray[j].rendered) * 100));
+  }
+}
+
+
+function makeChart() {
+  var chart1 = document.getElementById('chart').getContext('2d');
+  var chart2 = document.getElementById('chart2').getContext('2d');
+
+  var barChart1 = new Chart(chart1, {
+    type: 'bar',
+    data: {
+      labels: namesByImage,
+      datasets: [{
+        label: 'Times Clicked',
+        data: clicksByImage,
+        backgroundColor: 'rgba(0, 255, 0, 0.5)',
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            autoSkip: false
+          }
+        }]
+      }
+    }
+  });
+
+  var barChart2 = new Chart(chart2, {
+    type: 'bar',
+    data: {
+      labels: namesByImage,
+      datasets: [{
+        label: '% Clicked Per Renders',
+        data: percentClickedByImage,
+        backgroundColor: 'rgba(255, 0, 0, 0.5)',
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            autoSkip: false
+          }
+        }]
+      }
+    }
+  });
+
 }
 
 onLoad();
