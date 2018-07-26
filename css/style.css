@@ -65,7 +65,7 @@ p {
 
 #chartDiv1, #chartDiv2 {
   display: inline-block;
-  width: 500px;
-  height: 400px;
-  margin-left: 2.5%;
+  width: 35%;
+  height: 30%;
+  margin-left: 3%;
 }

@@ -5,6 +5,8 @@ var noRepeat = [];
 var namesByImage = [];
 var clicksByImage = [];
 var percentClickedByImage = [];
+var multipleSurveysTotalClicks = [];
+var multipleSurveysTotalPercents = [];
 
 var totalVotes = 0;
 
@@ -31,6 +33,7 @@ function Img(name, src) {
   this.rendered = 0;
 
   imgArray.push(this);
+  namesByImage.push(this.name);
 }
 
 // vote.addEventListener('click', renderImg);
@@ -151,6 +154,11 @@ function renderImgs() {
     clicked2.removeEventListener('click', picked2);
     clicked3.removeEventListener('click', picked3);
 
+    var liElement3 = document.createElement('li');
+    liElement3.textContent = 'This User\'s Data';
+    document.getElementById('list').appendChild(liElement3);
+    document.getElementById('list').appendChild(document.createElement('br'));
+
     for (var i = 0; i < imgArray.length; i++) {
       var liElement = document.createElement('li');
       liElement.textContent = imgArray[i].name + ': Times clicked: ' + imgArray[i].clicks;
@@ -168,15 +176,33 @@ function renderImgs() {
   }
 }
 
+var userClicksData = localStorage.getItem('userClicksData');
+var userPercentByRendersData = localStorage.getItem('userPercentByRendersData');
+var parsedUserClicksData = JSON.parse(userClicksData);
+var parsedUserPercentByRendersData = JSON.parse(userPercentByRendersData);
 
 function setDataArrays() {
+
   for (var j = 0; j < imgArray.length; j++) {
-    namesByImage.push(imgArray[j].name);
     clicksByImage.push(imgArray[j].clicks);
     percentClickedByImage.push(Math.round((imgArray[j].clicks / imgArray[j].rendered) * 100));
+    // if (localStorage.userPercentByRendersData)
   }
-}
+  if (localStorage.userClicksData) {
+    for (var i = 0; i < imgArray.length; i++) {
+      multipleSurveysTotalClicks[i] = clicksByImage[i] + parsedUserClicksData[i];
+      multipleSurveysTotalPercents[i] = percentClickedByImage[i];
+    }
+  } else {
+    multipleSurveysTotalClicks = clicksByImage;
+    multipleSurveysTotalPercents = percentClickedByImage;
+    localStorage.setItem('userClicksData', JSON.stringify(multipleSurveysTotalClicks));
+    localStorage.setItem('userPercentByRendersData', JSON.stringify(multipleSurveysTotalPercents));
+  }
 
+  localStorage.userClicksData = JSON.stringify(multipleSurveysTotalClicks);
+  localStorage.userPercentByRendersData = JSON.stringify(multipleSurveysTotalPercents);
+}
 
 function makeChart() {
   var chart1 = document.getElementById('chart').getContext('2d');
@@ -187,8 +213,8 @@ function makeChart() {
     data: {
       labels: namesByImage,
       datasets: [{
-        label: 'Times Clicked',
-        data: clicksByImage,
+        label: 'Times Clicked (All Users)',
+        data: multipleSurveysTotalClicks,
         backgroundColor: 'rgba(0, 255, 0, 0.5)',
       }]
     },
@@ -213,8 +239,8 @@ function makeChart() {
     data: {
       labels: namesByImage,
       datasets: [{
-        label: '% Clicked Per Renders',
-        data: percentClickedByImage,
+        label: '% Clicked Per Renders (This User)',
+        data: multipleSurveysTotalPercents,
         backgroundColor: 'rgba(255, 0, 0, 0.5)',
       }]
     },
