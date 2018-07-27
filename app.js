@@ -99,9 +99,9 @@ function removeImgs() {
 
 
 function reRollImgs() {
-  random1 = imgRandom();
-  random2 = imgRandom();
-  random3 = imgRandom();
+  random1 = imgRandom(imgArray);
+  random2 = imgRandom(imgArray);
+  random3 = imgRandom(imgArray);
 }
 
 
