@@ -58,7 +58,7 @@ new Img('USB', 'assets/usb.gif');
 new Img('Water-Can', 'assets/water-can.jpg');
 new Img('Wine-Glass', 'assets/wine-glass.jpg');
 
-function imgRandom() {
+function imgRandom(imgArray) {
   return imgArray[Math.floor(Math.random() * imgArray.length)];
 }
 
@@ -177,9 +177,9 @@ function renderImgs() {
 }
 
 var userClicksData = localStorage.getItem('userClicksData');
-var userPercentByRendersData = localStorage.getItem('userPercentByRendersData');
+// var userPercentByRendersData = localStorage.getItem('userPercentByRendersData');
 var parsedUserClicksData = JSON.parse(userClicksData);
-var parsedUserPercentByRendersData = JSON.parse(userPercentByRendersData);
+// var parsedUserPercentByRendersData = JSON.parse(userPercentByRendersData);
 
 function setDataArrays() {
 
